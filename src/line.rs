@@ -2,6 +2,7 @@ use crate::framebuffer::Framebuffer;
 
 pub trait DrawLine {
     fn draw_line(&mut self, x1: usize, y1: usize, x2: usize, y2: usize);
+    fn draw_polygon(&mut self, points: &[(usize, usize)]);
 }
 
 impl DrawLine for Framebuffer { //Se usa el algoritmo de bresenham para dibujar una linea de un punto a otro
@@ -36,5 +37,21 @@ impl DrawLine for Framebuffer { //Se usa el algoritmo de bresenham para dibujar 
                 y += sy;
             }
         }
+    }
+
+    fn draw_polygon(&mut self, points: &[(usize, usize)]) {
+        if points.len() < 3 {
+            return;
+        }
+
+        for i in 0..points.len() - 1 {
+            let (x1, y1) = points[i];
+            let (x2, y2) = points[i + 1];
+            self.draw_line(x1, y1, x2, y2);
+        }
+
+        let (x_last, y_last) = points[points.len() - 1];
+        let (x_first, y_first) = points[0];
+        self.draw_line(x_last, y_last, x_first, y_first);
     }
 }
