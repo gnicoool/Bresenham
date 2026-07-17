@@ -1,11 +1,11 @@
 use crate::framebuffer::Framebuffer;
 
-pub trait draw_line {
-    fn line(&mut self, x1: usize, y1: usize, x2: usize, y2: usize);
+pub trait DrawLine {
+    fn draw_line(&mut self, x1: usize, y1: usize, x2: usize, y2: usize);
 }
 
-impl draw_line for Framebuffer { //Se usa el algoritmo de bresenham para dibujar una linea de un punto a otro
-    fn line(&mut self, x1: usize, y1: usize, x2: usize, y2: usize) {
+impl DrawLine for Framebuffer { //Se usa el algoritmo de bresenham para dibujar una linea de un punto a otro
+    fn draw_line(&mut self, x1: usize, y1: usize, x2: usize, y2: usize) {
         let dx = (x2 as i32 - x1 as i32).abs();
         let dy = -(y2 as i32 - y1 as i32).abs();
 
