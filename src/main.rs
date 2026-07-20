@@ -1,9 +1,11 @@
 mod framebuffer;
 mod line;
+mod fill;
 mod bmp;
 
 use crate::framebuffer::Framebuffer;
 use crate::line::DrawLine;
+use crate::fill::Fill;
 use crate::bmp::WriteBmp;
 
 fn main() {
@@ -11,8 +13,6 @@ fn main() {
 
     framebuffer.set_background_color(0x000000);
     framebuffer.clear();
-
-    framebuffer.set_current_color(0xFF00FF);
 
     let poligono1 = [
         (165, 380), (185, 360), (180, 330), (207, 345), (233, 330), (230, 360), (250, 380), (220, 385), (205, 410), (193, 383)
@@ -36,6 +36,17 @@ fn main() {
         (682, 175), (708, 120), (735, 148), (739, 170)
     ];
 
+    let taza = [
+        &poligono4[..],
+        &poligono5[..]
+    ];
+    framebuffer.scanline_fill(&taza, 0xFF0000);
+
+    framebuffer.scanline_fill_individual(&poligono1, 0xFF00FF);
+    framebuffer.scanline_fill_individual(&poligono2, 0x00FFFF);
+    framebuffer.scanline_fill_individual(&poligono3, 0xFFFF00);
+
+    framebuffer.set_current_color(0xFFFFFF);
     framebuffer.draw_polygon(&poligono1);
     framebuffer.draw_polygon(&poligono2);
     framebuffer.draw_polygon(&poligono3);
